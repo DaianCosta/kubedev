@@ -1,0 +1,41 @@
+version: "3.8"
+
+volumes:
+  mariadb_vol:
+
+services:
+  mariadb:
+    image: mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+    volumes:
+      - mariadb_vol:/var/lib/mysql
+    networks:
+      - mariadb-compose-network
+
+  adminer:
+    image: adminer
+    restart: always
+    depends_on:
+      - mariadb
+    ports:
+      - 8082:8080
+    networks:
+      - mariadb-compose-network
+
+  phpmyadmin:
+    image: phpmyadmin
+    restart: always
+    depends_on:
+      - mariadb
+    ports:
+      - 8086:80
+    environment:
+      - PMA_ARBITRARY=1
+    networks:
+      - mariadb-compose-network
+
+networks:
+  mariadb-compose-network:
+    driver: bridge

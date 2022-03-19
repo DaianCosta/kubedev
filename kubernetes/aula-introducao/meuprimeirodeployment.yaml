@@ -1,0 +1,15 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: meuprimeirodeployment
+spec:
+  selector:
+    matchLabels:
+      app: exemplo
+  template: #especificacao do meu deployment
+    metadata:
+      app: exemplo
+    spec:
+      containers:
+        - name: meucontainer
+          image: kubedevio/nginx-color:blue

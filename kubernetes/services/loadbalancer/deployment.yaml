@@ -1,0 +1,16 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-deployment
+spec:
+  selector:
+    matchLabels:
+      app: api-conversao
+  template: #daqui pra baixo [e o meu pod]
+    metadata:
+      labels:
+        app: api-conversao
+    spec:
+      containers:
+        - name: api-container
+          image: kubedevio/api-conversao:v1-machine-name

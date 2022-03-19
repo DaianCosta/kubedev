@@ -1,0 +1,10 @@
+version: "3.8"
+
+services:
+  appdotnet:
+    image: desenvolvimentodaian/appdotnet:v1
+    build:
+      dockerfile: ./Dockerfile
+      context: ./ConversaoPeso.Web
+    ports:
+      - 8093:80

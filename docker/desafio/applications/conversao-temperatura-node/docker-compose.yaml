@@ -1,0 +1,11 @@
+version: "3.8"
+
+services:
+  api:
+    image: desenvolvimentodaian/api-node-conversion:v1
+    container_name: container-api-node
+    build:
+      dockerfile: ./Dockerfile
+      context: ./src
+    ports:
+      - 8086:8080

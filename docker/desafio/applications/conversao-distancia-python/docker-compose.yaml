@@ -1,0 +1,11 @@
+version: "3.8"
+
+services:
+  app:
+    container_name: app-python
+    image: desenvolvimentodaian/app-python:v2
+    build:
+      dockerfile: ./Dockerfile
+      context: ./
+    ports:
+      - 5001:5000

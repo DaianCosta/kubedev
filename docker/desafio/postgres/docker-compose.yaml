@@ -1,0 +1,45 @@
+version: "3.8"
+
+volumes:
+  postgres_vol:
+  pgadmin_vol:
+
+services:
+  postgres:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: admin
+    volumes:
+      - postgres_vol:/var/lib/postgresql/data
+    networks:
+      - postgres-compose-network
+
+  adminer:
+    image: adminer
+    restart: always
+    depends_on:
+      - postgres
+    ports:
+      - 8083:8080
+    networks:
+      - postgres-compose-network
+
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    depends_on:
+      - postgres
+    environment:
+      PGADMIN_DEFAULT_EMAIL: desenvolvimentodaian@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    volumes:
+      - pgadmin_vol:/var/lib/pgadmin
+    ports:
+      - 8085:80
+    networks:
+      - postgres-compose-network
+
+networks:
+  postgres-compose-network:
+    driver: bridge
