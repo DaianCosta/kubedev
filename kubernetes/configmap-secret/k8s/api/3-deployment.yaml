@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-pedelogo-deployment
+  namespace: back-end
+spec:
+  selector:
+    matchLabels:
+      app: api
+  template:
+    metadata:
+      labels:
+        app: api
+    spec:
+      containers:
+        - name: api
+          image: desenvolvimentodaian/pedelogo-catalogo:v1.0.0
+          ports:
+            - containerPort: 80
+          envFrom:
+            - configMapRef:
+                name: api-configmap
+          env:
+            - name: Mongo__User
+              valueFrom:
+                secretKeyRef:
+                  key: MONGO_INITDB_ROOT_USERNAME
+                  name: database.mongodb-secret
+            - name: Mongo__Password
+              valueFrom:
+                secretKeyRef:
+                  key: MONGO_INITDB_ROOT_PASSWORD
+                  name: database.mongodb-secret

@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: compute-resource
+spec:
+  hard: #o total de limites definidos nos resources dsos Pods/Containers é permitido ate os valores abaixo
+    requests.cpu: "128Mi" # a soma dos meus containers serao esse valor
+    requests.memory: "4Gi" # a soma dos meus containers serao esse valor
+    limits.cpu: "3" # a soma dos meus containers serao esse valor
+    limits.memory: "6Gi" # a soma dos meus containers serao esse valor
