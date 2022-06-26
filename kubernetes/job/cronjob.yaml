@@ -1,0 +1,26 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: roleta-cromjob
+spec:
+  schedule: "*/1 * * * *"
+  concurrencyPolicy: Replace # Replace (faz replace do job) Forbid (ignora enquanto nao terminar o processo atual)
+  jobTemplate:
+    spec:
+      backoffLimit: 20
+      parallelism: 2
+      completions: 3
+      template:
+        spec:
+          containers:
+          - name: job
+            image: kubedevio/roleta
+            args:
+                - "-w"
+                - "60"
+                - "-c"
+                - "2"
+                - "-m"
+                - "5"
+          restartPolicy: Never
+ 

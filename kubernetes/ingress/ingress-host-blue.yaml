@@ -1,0 +1,12 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-host-blue
+spec:
+  rules:
+    - host: kubeadm-daian-blue.datafisio.com.br
+      http:
+        paths:
+        - backend:
+            serviceName: blue-service
+            servicePort: 80

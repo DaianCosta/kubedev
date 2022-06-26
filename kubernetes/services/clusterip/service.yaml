@@ -4,7 +4,7 @@ metadata:
   name: api-service
 spec:
   selector:
-    app: api-conversao #vai pegar todos os pods que tem app = api-service
+    app: api-conversao #vai pegar todos os pods que tem app = api-conversao
   ports:
     - protocol: TCP
       port: 80

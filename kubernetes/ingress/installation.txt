@@ -1,0 +1,3 @@
+https://kubernetes.github.io/ingress-nginx/deploy/#digital-ocean
+
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.2.0/deploy/static/provider/do/deploy.yaml
