@@ -1,0 +1,136 @@
+####kind####
+
+kind create cluster --name cluster-daian-4 --config kind-cluster.yaml
+kind get clusters
+kind delete cluster --name cluster-daian-4
+
+####kubectl####
+
+kubectl delete --all deployments --namespace=database-mongodb
+
+kubectl logs api-deployment-85bd7586f6-mgssv -c init-pod -n api-pedelogo
+
+kubectl get all
+
+kubectl get pvc  -n database-mongodb
+
+#adicionar label no node, para utilização de selectors
+kubectl label node gfdffgdfgsfdgf database=mongodb
+
+#prioridade em nodes, atraves de label
+kubectl label node djfkgfdsjkghdkjfshg prioridade=1
+
+#criar namespace
+kubectl create namespace nginx-ingress
+
+#por namespace
+kubectl get all -n nginx-ingress
+
+#rollback
+kubectl rollout history deployment/app
+
+#rollback por revision
+kubectl rollout undo deployment/app --to-revision=2
+
+kubectl get pods --show-labels
+
+kubectl rollout history deployment.v1.apps/nginx-deployment
+
+kubectl rollout history deployment.apps/meu-ingress-controller-ingress-nginx-controller -n nginx-ingress  
+
+kubectl describe pod sdfgsdhfdfgdfg
+
+kubectl exec -it --namespace develop pod-name bash
+
+#####helm####
+helm repo add stable https://chart.shelm.sh/stable
+
+helm hepo update
+
+helm repo list
+
+#listar por namespace
+helm list -n nginx-ingress
+
+helm repo remove <repositorio-desejado>
+
+helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+
+helm search repo ingress
+
+helm inspect all ingress-nginx/ingress-nginx
+
+helm inspect values ingress-nginx/ingress-nginx
+
+#instalar em namespace
+helm install meu-ingress-controller ingress-nginx/ingress-nginx --namespace nginx-ingress
+
+#para atualizar uma release
+helm upgrade meu-ingress-controller ingress-nginx/ingress-nginx --namespace nginx-ingress --values .\values-replica.yaml 
+
+#historico
+helm history meu-ingress-controller -n nginx-ingress
+
+#desisntalar
+helm uninstall meu-ingress-controller
+
+#rollback
+helm rollback meu-ingress-controller -n nginx-ingress
+
+#criar um template chart
+helm create api-produto
+
+helm install minhaapi .\api-produto\ --dry-run --debug > debug.yaml
+helm install minhaapi .\api-produto\
+
+#desisntalar
+helm uninstall minhaapi
+
+####isntalar ingress-controller nginx ####
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v0.44.0/deploy/static/provider/scw/deploy.yaml
+
+#dependencias bilds
+#documentação - https://github.com/bitnami/charts/tree/master/bitnami/mongodb
+helm dependency build .\api-produto
+
+
+#trocar a versao instantanea
+kubectl patch service api-versao-service -p '{\"spec\":{\"selector\":{\"version\":\"v2\"}}}'
+
+##traefik
+##install traefik
+helm repo add traefik https://helm.traefik.io/traefik
+
+#baixar o repositorio-desejado
+helm repo update   
+
+helm show values traefik/traefik > values.yaml
+
+#criar namespace
+kubectl create namespace traefik-system
+
+#vai fazer o upgrade, no caso exista ou instalar, caso nao existir
+helm upgrade --install traefik traefik/traefik --namespace=traefik-system 
+
+#teste de carga simples
+docker container run fortio/fortio load http://api-pedelogo.datafisio.com.br
+
+#cert manager
+#install
+kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.2.0/cert-manager.yaml
+
+kubectl get clusterissuer -n cert-manager
+
+kubectl get certificate
+
+kubectl describe certificate <id>
+
+#jenkins
+docker network create jenkins
+
+docker build -t myjenkins-blueocean:1.1 .
+
+docker run --name jenkins-blueocean --rm --detach --network jenkins --env DOCKER_HOST=tcp://docker:2376 --env DOCKER_CERT_PATH=/certs/client --env DOCKER_TLS_VERIFY=1 --publish 8080:8080 --volume jenkins-data:/var/jenkins_home --volume jenkins-docker-certs:/certs/client:ro myjenkins-blueocean:1.1 
+
+
+docker container exec -it jenkins-blueocean bash
