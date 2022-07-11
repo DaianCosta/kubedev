@@ -1,0 +1,26 @@
+global:
+route:
+  receiver: Default
+  group_by: ['alertname'] #agrupar por nome dos alertas
+  group_wait: 15s #esperar acumular mensagens durante 15s
+  group_interval: 15s # tempo de intervalo para processar as notificações
+  repeat_interval: 5m #de quanto em quanto tempo será enviado, caso o problema persista
+
+  routes:
+  - receiver: MongoDBAlert
+    match:
+      team: mongodb
+  - receiver: WebAPIAlert
+    match:
+      team: webapi
+
+receivers:
+- name: Default
+  webhook_configs:
+  - url: 'https://pruu.herokuapp.com/dump/wpwebhookdefault'
+- name: MongoDBAlert
+  webhook_configs:
+  - url: 'https://pruu.herokuapp.com/dump/wpwebhookmongodb'
+- name: WebAPIAlert
+  webhook_configs:
+  - url: 'https://pruu.herokuapp.com/dump/wpwebhookwebapi'
