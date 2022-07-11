@@ -1,0 +1,16 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: dashboard
+  namespace: traefik-hub
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`dashboard.confrariadocodigotecnologia.com`)
+      kind: Rule
+      services:
+        - name: api@internal
+          kind: TraefikService
+  tls:
+    secretName: confrariadocodigotecnologia-com-secret

@@ -1,0 +1,17 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: ingressroute-tls-prometheus
+  namespace: traefik-hub
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`prometheus.confrariadocodigotecnologia.com`)
+      kind: Rule
+      services:
+        - name: my-prometheus-server
+          port: 8099
+          namespace: prometheus
+  tls:
+    secretName: confrariadocodigotecnologia-com-secret

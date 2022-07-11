@@ -1,0 +1,9 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: ratelimit
+  namespace: traefik-hub
+spec:
+  rateLimit: #limita a quantidade de requisicoes, que um entryPoint recebe em um intervalo de tempo
+    average: 5 #vai determinaar a quantidade maxima que sera tratado
+    period: 1s #a quantidade de tempo que sera tratado para a quantidade de requisicoes

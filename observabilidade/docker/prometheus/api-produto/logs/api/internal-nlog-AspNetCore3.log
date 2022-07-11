@@ -1,0 +1,44 @@
+2022-07-11 15:52:26.1495 Info Message Template Auto Format enabled
+2022-07-11 15:52:26.2703 Info Loading assembly: NLog.Web.AspNetCore
+2022-07-11 15:52:26.7179 Info Adding target FileTarget(Name=allfile)
+2022-07-11 15:52:26.7479 Info Adding target FileTarget(Name=ownFile-web)
+2022-07-11 15:52:26.7613 Info Adding target ConsoleTarget(Name=lifetimeConsole)
+2022-07-11 15:52:26.9305 Error Failed Watching path '/app' with file '/app/NLog.config' for changes. Exception: System.IO.IOException: Function not implemented
+   at System.IO.FileSystemWatcher.StartRaisingEvents()
+   at System.IO.FileSystemWatcher.StartRaisingEventsIfNotDisposed()
+   at System.IO.FileSystemWatcher.set_EnableRaisingEvents(Boolean value)
+   at NLog.Internal.MultiFileWatcher.Watch(String fileName)
+2022-07-11 15:52:27.0990 Info Validating config: TargetNames=allfile, lifetimeConsole, ownFile-web, ConfigItems=81, FilePath=/app/NLog.config
+2022-07-11 16:07:16.3330 Info Message Template Auto Format enabled
+2022-07-11 16:07:16.6078 Info Loading assembly: NLog.Web.AspNetCore
+2022-07-11 16:07:17.1396 Info Adding target FileTarget(Name=allfile)
+2022-07-11 16:07:17.1587 Info Adding target FileTarget(Name=ownFile-web)
+2022-07-11 16:07:17.1660 Info Adding target ConsoleTarget(Name=lifetimeConsole)
+2022-07-11 16:07:17.3174 Error Failed Watching path '/app' with file '/app/NLog.config' for changes. Exception: System.IO.IOException: Function not implemented
+   at System.IO.FileSystemWatcher.StartRaisingEvents()
+   at System.IO.FileSystemWatcher.StartRaisingEventsIfNotDisposed()
+   at System.IO.FileSystemWatcher.set_EnableRaisingEvents(Boolean value)
+   at NLog.Internal.MultiFileWatcher.Watch(String fileName)
+2022-07-11 16:07:17.4710 Info Validating config: TargetNames=allfile, lifetimeConsole, ownFile-web, ConfigItems=81, FilePath=/app/NLog.config
+2022-07-11 16:09:35.6521 Info Message Template Auto Format enabled
+2022-07-11 16:09:35.7773 Info Loading assembly: NLog.Web.AspNetCore
+2022-07-11 16:09:36.1839 Info Adding target FileTarget(Name=allfile)
+2022-07-11 16:09:36.2003 Info Adding target FileTarget(Name=ownFile-web)
+2022-07-11 16:09:36.2074 Info Adding target ConsoleTarget(Name=lifetimeConsole)
+2022-07-11 16:09:36.3339 Error Failed Watching path '/app' with file '/app/NLog.config' for changes. Exception: System.IO.IOException: Function not implemented
+   at System.IO.FileSystemWatcher.StartRaisingEvents()
+   at System.IO.FileSystemWatcher.StartRaisingEventsIfNotDisposed()
+   at System.IO.FileSystemWatcher.set_EnableRaisingEvents(Boolean value)
+   at NLog.Internal.MultiFileWatcher.Watch(String fileName)
+2022-07-11 16:09:36.4979 Info Validating config: TargetNames=allfile, lifetimeConsole, ownFile-web, ConfigItems=81, FilePath=/app/NLog.config
+2022-07-11 17:19:55.9758 Info Message Template Auto Format enabled
+2022-07-11 17:19:56.0633 Info Loading assembly: NLog.Web.AspNetCore
+2022-07-11 17:19:56.4460 Info Adding target FileTarget(Name=allfile)
+2022-07-11 17:19:56.4640 Info Adding target FileTarget(Name=ownFile-web)
+2022-07-11 17:19:56.4707 Info Adding target ConsoleTarget(Name=lifetimeConsole)
+2022-07-11 17:19:56.5866 Error Failed Watching path '/app' with file '/app/NLog.config' for changes. Exception: System.IO.IOException: Function not implemented
+   at System.IO.FileSystemWatcher.StartRaisingEvents()
+   at System.IO.FileSystemWatcher.StartRaisingEventsIfNotDisposed()
+   at System.IO.FileSystemWatcher.set_EnableRaisingEvents(Boolean value)
+   at NLog.Internal.MultiFileWatcher.Watch(String fileName)
+2022-07-11 17:19:56.7282 Info Validating config: TargetNames=allfile, lifetimeConsole, ownFile-web, ConfigItems=81, FilePath=/app/NLog.config

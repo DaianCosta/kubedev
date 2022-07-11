@@ -3,7 +3,7 @@ kind: Ingress
 metadata:
   name: ingress-path
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/rewrite-target: / #para resolver o path e redirecionar para o servico correto
 spec:
   rules:
     - host: kubeadm-daian.datafisio.com.br

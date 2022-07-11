@@ -1,0 +1,14 @@
+api:
+  image: kubedevio/pedelogo-catalogo:latest
+  serviceType: ClusterIP
+  ingress:
+    - k8s.confrariadocodigotecnologia.com
+
+mongodb:
+  auth:
+    rootPassword: mongoRoot
+    username: mongouser
+    password: mongopwd
+    database: produto
+  persistence:
+    enabled: false

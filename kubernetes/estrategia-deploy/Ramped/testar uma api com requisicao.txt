@@ -1,0 +1,1 @@
+while true; do curl --connect-timeout 1 http://api-pedelogo.datafisio.com.br; sleep 0.5;

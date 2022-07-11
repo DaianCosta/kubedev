@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-api-configmap
+  namespace: devpedelogo
+data:
+  Mongo__DataBase:  {{ .Values.mongodb.databaseName}}
+  Mongo__Host: {{ template "mongodb.serviceName" . }}

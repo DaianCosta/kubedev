@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: prometheus-service
+spec:
+  type: ExternalName
+  externalName: my-prometheus-server.prometheus.svc.cluster.local

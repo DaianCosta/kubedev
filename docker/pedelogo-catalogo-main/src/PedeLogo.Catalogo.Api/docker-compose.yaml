@@ -1,0 +1,45 @@
+
+version: "3.8"
+volumes:
+  mongo_vol:
+
+networks:
+  loki :
+    driver: bridge
+
+services:
+  api:
+    image: fabricioveronez/pedelogo-catalogo:v1
+    volumes:
+      - "./logs/api:/log"
+    ports:
+      - 8080:80
+    networks:
+      - loki
+    depends_on:
+      - mongodb
+    environment:
+      Mongo__Host: "mongodb"
+      Mongo__User: "mongouser"
+      Mongo__Password: "mongopwd"
+      Mongo__Port: "27017"
+      Mongo__DataBase: "admin"
+
+  mongodb:
+    image: mongo:4.4.3
+    ports:
+      - 27017:27017
+    networks:
+      - loki
+    volumes:
+      - mongo_vol:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongouser
+      MONGO_INITDB_ROOT_PASSWORD: mongopwd
+
+
+
+
+
+
+

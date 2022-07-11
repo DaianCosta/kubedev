@@ -1,0 +1,21 @@
+mongodb_op_counters_total{type="query"}
+mongodb_op_counters_total{type!="query"}
+mongodb_op_counters_total{type=~"query|command"}
+mongodb_op_counters_total{type!~"query|command"}
+mongodb_op_counters_total[1m]
+mongodb_op_counters_total[1m:5s]
+
+rate() media de calculos por segundo
+sum() para somar os valores
+sum(rate(http_requests_received_total[1h])) by (job)
+sum(rate(mongodb_op_counters_total[30s]))
+
+para agrupar
+
+sum(rate(mongodb_op_counters_total[1m])) by (type)
+
+sum(rate(http_requests_received_total[1m])) by (controller)
+
+10915 (.net)
+2385 (mongo)
+

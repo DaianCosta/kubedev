@@ -1,0 +1,173 @@
+NAME: minhaapi
+LAST DEPLOYED: Thu Jul  7 22:41:37 2022
+NAMESPACE: default
+STATUS: pending-install
+REVISION: 1
+TEST SUITE: None
+USER-SUPPLIED VALUES:
+{}
+
+COMPUTED VALUES:
+api:
+  image: kubedevio/pedelogo-catalogo:latest
+  ingress:
+  - k8s.confrariadocodigotecnologia.com
+  serviceType: ClusterIP
+mongodb:
+  credentials:
+    userName: mongouser
+    userPassword: mongopwd
+  databaseName: admin
+  tag: 4.2.8
+
+HOOKS:
+MANIFEST:
+---
+# Source: api-produto/templates/namespace.yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev-pedelogo
+---
+# Source: api-produto/templates/mongodb-secret.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: minhaapi-mongodb-secret
+  namespace: dev-pedelogo
+type: Opaque
+data:
+  MONGO_INITDB_ROOT_USERNAME: "bW9uZ291c2Vy" ## converte o texto para base64 e  devolve o base64 em forma de texto
+  MONGO_INITDB_ROOT_PASSWORD: "bW9uZ29wd2Q="
+---
+# Source: api-produto/templates/api-configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: minhaapi-api-configmap
+  namespace: dev-pedelogo
+data:
+  Mongo__DataBase:  admin
+  Mongo__Host: minhaapi-mongo-service
+---
+# Source: api-produto/templates/api-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: minhaapi-api-service
+  namespace: dev-pedelogo
+spec:
+  selector:
+    app: minhaapi-api
+  ports:
+  - port: 80
+    targetPort: 80
+  type: ClusterIP
+---
+# Source: api-produto/templates/mongo-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: minhaapi-mongo-service
+  namespace: dev-pedelogo
+spec:
+  selector:
+    app: minhaapi-mongodb
+  ports:
+  - port: 27017
+    targetPort: 27017
+---
+# Source: api-produto/templates/api-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: minhaapi-api-deployment
+  namespace: dev-pedelogo
+spec:
+  selector:
+    matchLabels:
+      app: minhaapi-api
+  template:
+    metadata:
+      labels:
+        app: minhaapi-api
+    spec:
+      containers:
+      - name: minhaapi-api
+        image: kubedevio/pedelogo-catalogo:latest
+        resources: 
+          requests:
+            cpu: "500m"
+            memory: "32Mi"
+          limits:
+            cpu: "500m"
+            memory: "64Mi"
+        ports:
+        - containerPort: 80
+        envFrom:
+          - configMapRef:
+              name: minhaapi-api-configmap
+        env:
+          - name: Mongo__User
+            valueFrom:
+              secretKeyRef:
+                key: MONGO_INITDB_ROOT_USERNAME
+                name: minhaapi-mongodb-secret
+          - name: Mongo__Password
+            valueFrom:
+              secretKeyRef:
+                key: MONGO_INITDB_ROOT_PASSWORD
+                name: minhaapi-mongodb-secret
+---
+# Source: api-produto/templates/mongo-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: minhaapi-mongodb-deployment
+  namespace: dev-pedelogo
+spec:
+  selector:
+    matchLabels:
+      app: minhaapi-mongodb
+  template:
+    metadata:
+      labels:
+        app: minhaapi-mongodb
+    spec:
+      containers:
+      - name: mongodb
+        image: mongo:4.2.8
+        ports:
+        - containerPort: 27017
+        resources: 
+          requests:
+            cpu: "1500m"
+            memory: "256Mi"
+          limits:
+            cpu: "1500m"
+            memory: "256Mi"
+        envFrom:
+            - secretRef:
+                name: minhaapi-mongodb-secret
+---
+# Source: api-produto/templates/api-ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: minhaapi-api-ingress
+  namespace: dev-pedelogo
+spec:
+  rules:
+  - host: k8s.confrariadocodigotecnologia.com
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: minhaapi-api-service
+            port: 
+              number: 80
+
+NOTES:
+Instalado
