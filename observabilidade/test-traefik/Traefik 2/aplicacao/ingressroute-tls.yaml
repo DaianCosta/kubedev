@@ -1,0 +1,31 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: ingressroute
+  namespace: dev
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`k8s.confrariadocodigotecnologia.com`)
+      kind: Rule
+      services:
+        - name: nginx-service
+          port: 80
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: ingressroute-tls
+  namespace: dev
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`k8s.confrariadocodigotecnologia.com`)
+      kind: Rule
+      services:
+        - name: nginx-service
+          port: 80
+  tls:
+    secretName: confrariadocodigotecnologia-com-secret

@@ -12,6 +12,8 @@ spec:
         - api.confrariadocodigotecnologia.com
         - prometheus.confrariadocodigotecnologia.com
         - alert.confrariadocodigotecnologia.com
+        - tracing.confrariadocodigotecnologia.com
+
       secretName: confrariadocodigotecnologia-com-secret
   rules:
     - host: k8s.confrariadocodigotecnologia.com
@@ -55,5 +57,16 @@ spec:
             backend:
               service:
                 name: alertmanager-service
+                port:
+                  number: 80
+
+    - host: tracing.confrariadocodigotecnologia.com
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: jaeger-service
                 port:
                   number: 80

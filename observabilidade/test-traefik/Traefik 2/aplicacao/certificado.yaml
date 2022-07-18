@@ -2,6 +2,7 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: letsencrypt-confrariadocodigotecnologia-com-cert
+  namespace: dev
 spec:
   secretName: confrariadocodigotecnologia-com-secret
   issuerRef:
@@ -9,7 +10,3 @@ spec:
     name: letsencrypt-prod
   dnsNames:
     - "k8s.confrariadocodigotecnologia.com"
-    - "api.confrariadocodigotecnologia.com"
-    - "prometheus.confrariadocodigotecnologia.com"
-    - "alert.confrariadocodigotecnologia.com"
-    - "tracing.confrariadocodigotecnologia.com"
