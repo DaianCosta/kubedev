@@ -1,0 +1,44 @@
+global:
+  #de 15 em 15 segundos ira fazer a coleta do endpoint
+  scrape_interval: 15s
+  scrape_timeout: 5s
+   # de quanto em quanto tempo, irá processar as minhas roles (alertas)
+  evaluation_interval: 15s
+  external_labels:
+    aula: kubedev-prometheus
+
+rule_files:
+  - alert-rules.rules
+#onde configura os jobs e targets
+#a api pedelog é um job
+#target - os endpoints que eu quero coletar
+scrape_configs:
+  - job_name: Prometheus
+    static_configs:
+      - targets: ["localhost:9090"]
+        labels:
+          grupo: "Prometheus"
+
+  - job_name: Api
+     #de 15 em 15 segundos ira fazer a coleta do endpoint
+    scrape_interval: 5s
+    scrape_timeout: 1s
+    scheme: http
+    metrics_path: /metrics
+    static_configs:
+      - targets: ["pedelogo.catalogo.api"]
+        labels:
+          grupo: "webapi"
+
+  - job_name: mongodbexporter
+    static_configs:
+      - targets: ["mongodbexporter:9216"]
+        labels:
+          grupo: "MongoDB"
+
+alerting:
+  alertmanagers:
+  - scheme: http
+    static_configs:
+    - targets: 
+      - 'alertmanager:9093'

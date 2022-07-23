@@ -1,0 +1,69 @@
+version : '3.4'
+services:
+  pedelogo.catalogo.api:
+    image: kubedevio/pedelogo-catalogo:v1.0.0
+    ports:
+      - 8080:80
+    environment:
+      Mongo__Host: mongodb
+      Mongo__User: mongouser
+      Mongo__Password: mongopwd
+      Mongo__Port: 27017
+      Mongo__Database: admin
+    depends_on:
+      - mongodb
+    networks:
+      - pedelogo_network
+  mongodb:
+    image: mongo:4.2.8
+    networks:
+      - pedelogo_network
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongouser
+      MONGO_INITDB_ROOT_PASSWORD: mongopwd
+  mongodbexporter:
+    image: fabricioveronez/mongo_exporter
+    ports:
+      - "9216:9216"
+    depends_on:
+      - mongodb
+    environment:
+      MONGODB_URI: "mongodb://mongouser:mongopwd@mongodb:27017"
+    networks:
+      - pedelogo_network
+  prometheus:
+    image: prom/prometheus:v2.22.0
+    ports:
+      - "9090:9090"
+    volumes:
+     #copiar o meu yaml para o yaml do prometheus
+      - ./prometheus.yaml:/etc/prometheus/prometheus.yml
+      - ./alert-rules.yaml:/etc/prometheus/alert-rules.rules
+    depends_on:
+      - pedelogo.catalogo.api
+      - mongodbexporter
+    networks:
+      - pedelogo_network
+  grafana:
+    image: grafana/grafana:7.3.3
+    ports:
+      - "3000:3000"
+    depends_on:
+      - pedelogo.catalogo.api
+    networks:
+      - pedelogo_network
+  alertmanager:
+    image: prom/alertmanager:v0.21.0
+    volumes:
+      - ./alert-manager.yaml:/prometheus/alertmanager.yml
+    command:
+      - '--config.file=/prometheus/alertmanager.yml'
+    ports:
+      - "9093:9093"
+    depends_on:
+      - prometheus
+    networks:
+      - pedelogo_network
+networks:
+  pedelogo_network:
+    driver: bridge
